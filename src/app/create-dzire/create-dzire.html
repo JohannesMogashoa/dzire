@@ -1,1 +1,80 @@
-<p>create-dzire works!</p>
+<div class="container mx-auto p-4">
+  <h2 class="mb-5 text-2xl font-bold">What is it you truly desire?</h2>
+  <p class="mb-5 text-xs">
+    Get started with creating your Dzire by filling out the form below.
+  </p>
+
+  <form
+    class="flex flex-col mx-auto mt-5"
+    [formGroup]="dzireForm"
+    (ngSubmit)="onSubmitDzire()"
+  >
+    <div class="flex flex-col gap-5 md:flex-row md:justify-between">
+      <div>
+        <label class="floating-label">
+          <span>Dzire Title</span>
+          <input
+            type="text"
+            placeholder="Title your dzire..."
+            class="input input-md w-full"
+            formControlName="title"
+            required
+          />
+        </label>
+      </div>
+      <div>
+        <label class="floating-label">
+          <span>Description</span>
+        </label>
+        <textarea
+          placeholder="Describe your dzire"
+          class="textarea textarea-bordered w-full"
+          formControlName="description"
+        ></textarea>
+      </div>
+      <div class="form-control">
+        <label class="input w-full">
+          <span class="label">Expiry date</span>
+          <input type="date" formControlName="endDate" />
+        </label>
+      </div>
+    </div>
+
+    @for (item of items; track item.id) {
+    <p>
+      <span class="text-sm font-semibold">{{ item.title }}</span>
+      <span class="text-xs text-gray-500">{{ item.description }}</span>
+    </p>
+    }
+
+    <form class="mt-5" [formGroup]="dzireItemForm" (ngSubmit)="onSubmitItem()">
+      <p class="mb-3">Capture your dzired items:</p>
+      <div class="mb-5">
+        <label class="floating-label">
+          <span>Item Title</span>
+          <input
+            type="text"
+            placeholder="Title your dzire..."
+            class="input input-md w-full"
+            formControlName="itemTitle"
+          />
+        </label>
+      </div>
+      <div>
+        <label class="floating-label">
+          <span>Item Description</span>
+        </label>
+        <textarea
+          placeholder="Describe your dzire"
+          class="textarea textarea-bordered w-full"
+          formControlName="itemDescription"
+        ></textarea>
+      </div>
+      <div class="flex justify-end">
+        <button type="submit" class="btn btn-secondary mt-4">Save Item</button>
+      </div>
+    </form>
+
+    <button type="submit" class="btn btn-primary mt-4">Create Dzire</button>
+  </form>
+</div>
