@@ -57,3 +57,7 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+```txt
+Build me a generic registry app that allows me to put a list of things I want and share it with friends and family, allowing them to select what is being bought, and let them see what has already been reserved to be bought. I however do not want to see what will be bought until the expiry date has passed.
+```
