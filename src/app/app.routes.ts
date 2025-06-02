@@ -11,7 +11,7 @@ export const routes: Routes = [
     component: Home,
   },
   {
-    path: 'wishlist',
+    path: 'wishlist/:id',
     component: Wishlist,
   },
   {

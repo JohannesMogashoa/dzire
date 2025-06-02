@@ -10,19 +10,19 @@ export const sampleDzires: Dzire[] = [
         id: 1,
         title: 'Wireless Headphones',
         description: 'Noise-cancelling over-ear headphones.',
-        satisfied: false,
+        reserved: false,
       },
       {
         id: 2,
         title: 'Smartwatch',
         description: 'A fitness-focused smartwatch.',
-        satisfied: false,
+        reserved: false,
       },
       {
         id: 3,
         title: 'Portable Charger',
         description: 'High-capacity power bank.',
-        satisfied: false,
+        reserved: false,
       },
     ],
     iconUrl: 'https://example.com/icons/gadgets.png',
@@ -38,13 +38,13 @@ export const sampleDzires: Dzire[] = [
         id: 1,
         title: 'The Pragmatic Programmer',
         description: 'Classic software engineering book.',
-        satisfied: false,
+        reserved: false,
       },
       {
         id: 2,
         title: 'Atomic Habits',
         description: 'Book on building good habits.',
-        satisfied: false,
+        reserved: false,
       },
     ],
     iconUrl: 'https://example.com/icons/books.png',
@@ -60,13 +60,13 @@ export const sampleDzires: Dzire[] = [
         id: 1,
         title: 'Hot Air Balloon Ride',
         description: 'A sunrise balloon ride over the city.',
-        satisfied: false,
+        reserved: false,
       },
       {
         id: 2,
         title: 'Cooking Class',
         description: 'Learn to cook Italian cuisine.',
-        satisfied: false,
+        reserved: false,
       },
     ],
     iconUrl: 'https://example.com/icons/experience.png',
@@ -82,13 +82,13 @@ export const sampleDzires: Dzire[] = [
         id: 1,
         title: 'Leather Wallet',
         description: 'A slim, brown leather wallet.',
-        satisfied: false,
+        reserved: false,
       },
       {
         id: 2,
         title: 'Sneakers',
         description: 'Comfortable running shoes.',
-        satisfied: false,
+        reserved: false,
       },
     ],
     iconUrl: 'https://example.com/icons/fashion.png',
@@ -104,13 +104,13 @@ export const sampleDzires: Dzire[] = [
         id: 1,
         title: 'Aromatic Candles',
         description: 'Set of lavender-scented candles.',
-        satisfied: false,
+        reserved: false,
       },
       {
         id: 2,
         title: 'Wall Art',
         description: 'Modern abstract painting.',
-        satisfied: false,
+        reserved: false,
       },
     ],
     iconUrl: 'https://example.com/icons/home.png',
@@ -126,13 +126,13 @@ export const sampleDzires: Dzire[] = [
         id: 1,
         title: 'Animal Shelter Donation',
         description: 'Support for local animal shelter.',
-        satisfied: false,
+        reserved: false,
       },
       {
         id: 2,
         title: 'Tree Planting',
         description: 'Donation to plant trees.',
-        satisfied: false,
+        reserved: false,
       },
     ],
     iconUrl: 'https://example.com/icons/charity.png',
@@ -153,6 +153,6 @@ export type DzireItem = {
   id?: number;
   title: string;
   description: string;
-  satisfied: boolean;
-  satisfiedDate?: Date;
+  reserved: boolean;
+  reservedDate?: Date;
 };
