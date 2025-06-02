@@ -7,16 +7,19 @@ export const sampleDzires: Dzire[] = [
     createDate: new Date('2025-06-01'),
     items: [
       {
+        id: 1,
         title: 'Wireless Headphones',
         description: 'Noise-cancelling over-ear headphones.',
         satisfied: false,
       },
       {
+        id: 2,
         title: 'Smartwatch',
         description: 'A fitness-focused smartwatch.',
         satisfied: false,
       },
       {
+        id: 3,
         title: 'Portable Charger',
         description: 'High-capacity power bank.',
         satisfied: false,
@@ -32,11 +35,13 @@ export const sampleDzires: Dzire[] = [
     createDate: new Date('2025-06-01'),
     items: [
       {
+        id: 1,
         title: 'The Pragmatic Programmer',
         description: 'Classic software engineering book.',
         satisfied: false,
       },
       {
+        id: 2,
         title: 'Atomic Habits',
         description: 'Book on building good habits.',
         satisfied: false,
@@ -52,11 +57,13 @@ export const sampleDzires: Dzire[] = [
     createDate: new Date('2025-06-01'),
     items: [
       {
+        id: 1,
         title: 'Hot Air Balloon Ride',
         description: 'A sunrise balloon ride over the city.',
         satisfied: false,
       },
       {
+        id: 2,
         title: 'Cooking Class',
         description: 'Learn to cook Italian cuisine.',
         satisfied: false,
@@ -72,11 +79,13 @@ export const sampleDzires: Dzire[] = [
     createDate: new Date('2025-06-01'),
     items: [
       {
+        id: 1,
         title: 'Leather Wallet',
         description: 'A slim, brown leather wallet.',
         satisfied: false,
       },
       {
+        id: 2,
         title: 'Sneakers',
         description: 'Comfortable running shoes.',
         satisfied: false,
@@ -92,11 +101,13 @@ export const sampleDzires: Dzire[] = [
     createDate: new Date('2025-06-01'),
     items: [
       {
+        id: 1,
         title: 'Aromatic Candles',
         description: 'Set of lavender-scented candles.',
         satisfied: false,
       },
       {
+        id: 2,
         title: 'Wall Art',
         description: 'Modern abstract painting.',
         satisfied: false,
@@ -112,11 +123,13 @@ export const sampleDzires: Dzire[] = [
     createDate: new Date('2025-06-01'),
     items: [
       {
+        id: 1,
         title: 'Animal Shelter Donation',
         description: 'Support for local animal shelter.',
         satisfied: false,
       },
       {
+        id: 2,
         title: 'Tree Planting',
         description: 'Donation to plant trees.',
         satisfied: false,
