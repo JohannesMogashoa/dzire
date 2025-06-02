@@ -49,7 +49,7 @@ export class CreateDzire {
     this.items.push({
       title: this.dzireItemForm.value.itemTitle || '',
       description: this.dzireItemForm.value.itemDescription || '',
-      satisfied: false,
+      reserved: false,
       id: this.items.length + 1, // Simple ID generation
     });
 

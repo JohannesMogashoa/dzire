@@ -113,7 +113,7 @@ export class ManageDzire {
     const newItem = {
       title: itemTitle,
       description: itemDescription,
-      satisfied: false,
+      reserved: false,
       id: (this.selectedDzire()?.items.length || 0) + 1, // Simple ID generation
     };
 
