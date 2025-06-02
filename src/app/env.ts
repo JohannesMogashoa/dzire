@@ -1,13 +1,3 @@
-// Import the functions you need from the SDKs you need
-
-import { initializeApp } from 'firebase/app';
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-
 export const environment = {
   production: false,
   firebaseConfig: {
@@ -20,6 +10,3 @@ export const environment = {
     measurementId: 'G-V29BML2N4X',
   },
 };
-
-// Initialize Firebase
-export const app = initializeApp(environment.firebaseConfig);
