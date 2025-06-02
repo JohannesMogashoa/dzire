@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
-import type { Dzire, DzireItem } from './../../../dzires';
 
+import { AuthenticationService } from '../../services/auth.service';
+import { DzireService } from '../../services/dzires.service';
+import type { FirebaseDzireDocument } from './../../../dzires';
 import { Router } from '@angular/router';
-import { sampleDzires } from './../../../dzires';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,14 +13,30 @@ import { sampleDzires } from './../../../dzires';
 })
 export class Dashboard {
   private router = inject(Router);
+  private authService = inject(AuthenticationService);
+  private dzireService = inject(DzireService);
+  userId: string | null = null;
+  dzires: FirebaseDzireDocument[] = [];
+
+  constructor(authService: AuthenticationService, dzireService: DzireService) {
+    authService.isLoggedIn$.subscribe((user) => {
+      if (!user) {
+        return;
+      }
+
+      dzireService
+        .fetchDziresForUser(user.uid)
+        .then((data: FirebaseDzireDocument[]) => {
+          this.dzires = data;
+        });
+    });
+  }
 
   navigateToCreate() {
     this.router.navigate(['/create']);
   }
 
-  navigateToManage(id: number) {
+  navigateToManage(id: string) {
     this.router.navigate(['/manage', id]);
   }
-
-  dzires = sampleDzires;
 }

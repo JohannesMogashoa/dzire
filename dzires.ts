@@ -156,3 +156,21 @@ export type DzireItem = {
   reserved: boolean;
   reservedDate?: Date;
 };
+
+export interface FirebaseDzireDocument {
+  id: string;
+  title: string;
+  description: string;
+  endDate: Date;
+  createDate: Date;
+  items: FirebaseDzireItem[];
+  imageUrl?: string;
+}
+
+export interface FirebaseDzireItem {
+  id: string;
+  title: string;
+  description: string;
+  reserved: boolean;
+  reservedDate?: Date;
+}
