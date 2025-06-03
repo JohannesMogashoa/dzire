@@ -1,8 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, inject, signal } from '@angular/core';
-import type { Dzire, DzireItem } from './../../../dzires';
+import type { Dzire, DzireItem } from '../shared/dzires';
 
-import { sampleDzires } from '../../../dzires';
+import { sampleDzires } from '../shared/dzires';
 
 @Component({
   selector: 'app-wishlist',
