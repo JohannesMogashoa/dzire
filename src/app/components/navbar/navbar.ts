@@ -1,4 +1,4 @@
-import { Auth, User } from '@angular/fire/auth';
+import { Auth, User, authState } from '@angular/fire/auth';
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
@@ -14,18 +14,22 @@ export class Navbar {
   authService = inject(AuthenticationService);
   router = inject(Router);
   user = signal<User | null>(null);
-  auth = inject(Auth);
 
   constructor() {
     this.authService.user$.subscribe({
-      next: (value) => this.user.set(value),
+      next: (value) => {
+        console.log('User fetched:', value);
+        this.user.set(value);
+      },
       error: (err) => {
         console.error('Error fetching user:', err);
         this.user.set(null);
       },
     });
+  }
 
-    console.log(this.auth.currentUser);
+  ngOnDestroy() {
+    this.authService.user$.subscribe().unsubscribe();
   }
 
   logout() {
