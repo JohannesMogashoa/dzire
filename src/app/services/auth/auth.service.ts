@@ -1,5 +1,3 @@
-// auth.service.ts
-
 import {
   Auth,
   GoogleAuthProvider,

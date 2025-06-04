@@ -1,44 +1,44 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from "@angular/router";
+import { Component, inject, signal } from "@angular/core";
+import { DzireInterface, UserInterface } from "../../interfaces";
+import { DzireService, UserService } from "../../services";
 
-import { AuthenticationService } from '../../services/auth.service';
-import { DzireInterface } from './../../models/dzire.interface';
-import { DzireService } from '../../services/dzires.service';
-import { User } from '@angular/fire/auth';
+import { CommonModule } from "@angular/common";
+import { User } from "@angular/fire/auth";
+import { map } from "rxjs";
 
 @Component({
-  selector: 'app-home',
-  imports: [],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
+	selector: "app-home",
+	imports: [CommonModule],
+	templateUrl: "./home.html",
+	styleUrl: "./home.css",
 })
 export class Home {
-  private router = inject(Router);
-  private authService = inject(AuthenticationService);
-  private dzireService = inject(DzireService);
-  private activatedRoute = inject(ActivatedRoute);
-  user: User = this.activatedRoute.snapshot.data['user'];
-  dzires = [] as DzireInterface[];
+	private router = inject(Router);
+	private dzireService = inject(DzireService);
+	private activatedRoute = inject(ActivatedRoute);
 
-  ngOnInit(): void {
-    // console.log();
-    // const user = this.authService.currentUserSig();
-    // console.log('Current User:', user);
-    // if (user) {
-    //   this.userId = user.uid;
-    //   this.dzireService
-    //     .fetchDziresForUser(user.uid)
-    //     .then((data: DzireInterface[]) => {
-    //       this.dzires = data;
-    //     });
-    // }
-  }
+	user: User = this.activatedRoute.snapshot.data["user"];
+	dzires$ = this.dzireService
+		.getSnapshotChanges((ref) => ref.where("userId", "==", this.user.uid))
+		.pipe(
+			map((dzires) =>
+				dzires.map((dzire) => ({
+					...dzire,
+					expiryDate: dzire.expiryDate.toDate().toLocaleDateString(),
+				}))
+			)
+		);
 
-  navigateToCreate() {
-    this.router.navigate(['/create']);
-  }
+	get displayName() {
+		return this.user.displayName || this.user.email?.split("@")[0];
+	}
 
-  navigateToManage(id: string) {
-    this.router.navigate(['/manage', id]);
-  }
+	navigateToCreate() {
+		this.router.navigate(["/create"]);
+	}
+
+	navigateToManage(id: string) {
+		this.router.navigate(["/manage", id]);
+	}
 }
