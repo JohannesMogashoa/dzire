@@ -1,9 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, inject, signal } from '@angular/core';
-import type { Dzire, DzireItem } from './../../../dzires';
+import { Dzire, DzireItem, sampleDzires } from '../../shared/dzires';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-
-import { sampleDzires } from '../../../dzires';
 
 @Component({
   selector: 'app-manage-dzire',

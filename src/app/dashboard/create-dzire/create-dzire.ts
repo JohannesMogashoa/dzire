@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
-import { DzireItem } from '../../../dzires';
+import { DzireItem } from '../../shared/dzires';
 import { Router } from '@angular/router';
 
 @Component({
