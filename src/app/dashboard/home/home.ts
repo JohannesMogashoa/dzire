@@ -3,11 +3,11 @@ import { Component, inject, signal } from "@angular/core";
 import { DzireInterface, DzireList, UserInterface } from "../../interfaces";
 import { DzireService, UserService } from "../../services";
 import { QueryConstraint, where } from "@angular/fire/firestore";
+import { firstValueFrom, map } from "rxjs";
 
 import { CommonModule } from "@angular/common";
 import { FireStoreTService } from "../../services/firebase/firestore-t.service";
 import { User } from "@angular/fire/auth";
-import { map } from "rxjs";
 
 @Component({
 	selector: "app-home",
@@ -35,6 +35,15 @@ export class Home {
 
 	get displayName() {
 		return this.user.displayName || this.user.email?.split("@")[0];
+	}
+
+	async deleteDzire(id: string) {
+		try {
+			await firstValueFrom(this.firestore.delete("dzires", id));
+			console.log("Dzire deleted successfully");
+		} catch (error) {
+			console.error("Error deleting dzire:", error);
+		}
 	}
 
 	navigateToCreate() {

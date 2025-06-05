@@ -35,7 +35,10 @@
 					<p>{{ dzire.description }}</p>
 					<p class="text-sm">Expiry Date: {{ dzire.expiryDate }}</p>
 					<div class="card-actions justify-between">
-						<button class="btn btn-secondary text-white">
+						<button
+							(click)="deleteDzire(dzire.id)"
+							class="btn btn-secondary text-white"
+						>
 							Delete
 						</button>
 						<button
