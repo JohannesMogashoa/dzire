@@ -33,7 +33,7 @@ export abstract class FireStoreService<T extends { id: string }> {
 			);
 	}
 
-	add(data: T) {
+	add<T>(data: T) {
 		return from(
 			this.firestore.collection<T>(this.collectionName).add(data)
 		);

@@ -7,9 +7,11 @@ export interface DzireInterface extends AuditableInterface {
 	title: string;
 	description: string;
 	expiryDate: Timestamp;
-	imageUrl?: string;
+	imageUrl: string | null;
 	userId: string;
 	items: DzireItemInterface[];
 }
 
-export type DzireListInterface = Omit<DzireInterface, "items">;
+export type DzireList = Omit<DzireInterface, "items">;
+
+export type CreateDzireForm = Omit<DzireList, "id">;

@@ -1,58 +1,106 @@
-import { Component, inject } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from "@angular/router";
+import { Component, inject } from "@angular/core";
+import { CreateDzireForm, CreateDzireItemForm } from "../../interfaces";
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 
-import { DzireItem } from '../../shared/dzires';
-import { Router } from '@angular/router';
+import { DzireService } from "../../services";
+import { FireStoreTService } from "../../services/firebase/firestore-t.service";
+import { Timestamp } from "@angular/fire/firestore";
+import { User } from "@angular/fire/auth";
+import { take } from "rxjs";
 
 @Component({
-  selector: 'app-create-dzire',
-  imports: [ReactiveFormsModule],
-  templateUrl: './create-dzire.html',
-  styleUrl: './create-dzire.css',
+	selector: "app-create-dzire",
+	imports: [ReactiveFormsModule],
+	templateUrl: "./create-dzire.html",
+	styleUrl: "./create-dzire.css",
 })
 export class CreateDzire {
-  private router = inject(Router);
-  items: DzireItem[] = [];
+	private router = inject(Router);
+	private activatedRoute = inject(ActivatedRoute);
+	firestore = inject(FireStoreTService);
+	fb = inject(FormBuilder);
 
-  dzireForm = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
-    endDate: new FormControl(new Date()),
-  });
+	items: CreateDzireItemForm[] = [];
+	user: User = this.activatedRoute.snapshot.data["user"];
 
-  dzireItemForm = new FormGroup({
-    itemTitle: new FormControl(''),
-    itemDescription: new FormControl(''),
-  });
+	dzireForm = this.fb.nonNullable.group({
+		title: ["", Validators.required],
+		description: ["", Validators.required],
+		expiryDate: ["", Validators.required],
+	});
 
-  onSubmitDzire() {
-    const dzire = {
-      title: this.dzireForm.value.title || '',
-      description: this.dzireForm.value.description || '',
-      endDate: this.dzireForm.value.endDate || new Date(),
-      createDate: new Date(),
-      items: this.items,
-      id: Math.floor(Math.random() * 1000), // Simple ID generation
-    };
+	dzireItemForm = this.fb.nonNullable.group({
+		itemTitle: ["", Validators.required],
+		itemDescription: ["", Validators.required],
+	});
 
-    console.log('Dzire created:', dzire);
-    // Here you would typically send the dzire to a service or API
+	errorMessage: string | null = null;
 
-    // Reset the form and items
-    this.dzireForm.reset();
-    this.items = [];
+	onSubmitDzire() {
+		const rawForm = this.dzireForm.getRawValue();
 
-    this.router.navigate(['/dashboard']);
-  }
+		console.log("Dzire Form Data:", rawForm);
 
-  onSubmitItem() {
-    this.items.push({
-      title: this.dzireItemForm.value.itemTitle || '',
-      description: this.dzireItemForm.value.itemDescription || '',
-      reserved: false,
-      id: this.items.length + 1, // Simple ID generation
-    });
+		const dzire: CreateDzireForm = {
+			title: rawForm.title,
+			description: rawForm.description,
+			expiryDate: Timestamp.fromDate(new Date(rawForm.expiryDate)),
+			createdAt: Timestamp.fromDate(new Date()),
+			updatedAt: Timestamp.fromDate(new Date()),
+			imageUrl: null,
+			userId: this.user.uid,
+		};
 
-    this.dzireItemForm.reset();
-  }
+		this.firestore
+			.addWithChildren<CreateDzireForm, CreateDzireItemForm>(
+				"dzires",
+				dzire,
+				"items",
+				this.items
+			)
+			.pipe(take(1))
+			.subscribe({
+				next: (response) => console.log(response),
+				error: (error) => {
+					console.error("Error creating dzire:", error);
+					this.errorMessage =
+						"Failed to create dzire. Please try again.";
+				},
+				complete: () => {
+					console.log("Dzire created successfully");
+					this.dzireForm.reset();
+					this.items = [];
+					this.router.navigate(["/dashboard"]);
+				},
+			});
+
+		// this.dzireService.create({ dzire, items: this.items }).subscribe({
+		// 	next: (response) => {
+		// 		console.log("Dzire created successfully:", response);
+		// 		this.dzireForm.reset();
+		// 		this.items = [];
+		// 		this.router.navigate(["/dashboard"]);
+		// 	},
+		// 	error: (error) => {
+		// 		console.error("Error creating dzire:", error);
+		// 		this.errorMessage = "Failed to create dzire. Please try again.";
+		// 	},
+		// });
+	}
+
+	onSubmitItem() {
+		const rawForm = this.dzireItemForm.getRawValue();
+
+		this.items.push({
+			title: rawForm.itemTitle,
+			description: rawForm.itemDescription,
+			reserved: false,
+			reservedDate: null,
+			createdAt: Timestamp.fromDate(new Date()),
+			updatedAt: Timestamp.fromDate(new Date()),
+		});
+
+		this.dzireItemForm.reset();
+	}
 }

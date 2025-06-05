@@ -6,5 +6,7 @@ export interface DzireItemInterface extends AuditableInterface {
 	title: string;
 	description: string;
 	reserved: boolean;
-	reservedDate?: Timestamp;
+	reservedDate: Timestamp | null;
 }
+
+export type CreateDzireItemForm = Omit<DzireItemInterface, "id">;

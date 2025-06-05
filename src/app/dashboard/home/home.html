@@ -28,7 +28,7 @@
 
 	<div class="container px-5 mx-auto mt-10">
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-			@for (dzire of dzires$ | async; track dzire.id) {
+			@for (dzire of dzires; track dzire.id) {
 			<div class="card card-border bg-base-200 w-full">
 				<div class="card-body">
 					<h2 class="card-title">{{ dzire.title }}</h2>

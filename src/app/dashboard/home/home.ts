@@ -1,9 +1,11 @@
 import { ActivatedRoute, Router } from "@angular/router";
 import { Component, inject, signal } from "@angular/core";
-import { DzireInterface, UserInterface } from "../../interfaces";
+import { DzireInterface, DzireList, UserInterface } from "../../interfaces";
 import { DzireService, UserService } from "../../services";
+import { QueryConstraint, where } from "@angular/fire/firestore";
 
 import { CommonModule } from "@angular/common";
+import { FireStoreTService } from "../../services/firebase/firestore-t.service";
 import { User } from "@angular/fire/auth";
 import { map } from "rxjs";
 
@@ -15,30 +17,31 @@ import { map } from "rxjs";
 })
 export class Home {
 	private router = inject(Router);
-	private dzireService = inject(DzireService);
 	private activatedRoute = inject(ActivatedRoute);
+	private firestore = inject(FireStoreTService);
 
 	user: User = this.activatedRoute.snapshot.data["user"];
-	dzires$ = this.dzireService
-		.getSnapshotChanges((ref) => ref.where("userId", "==", this.user.uid))
-		.pipe(
-			map((dzires) =>
-				dzires.map((dzire) => ({
-					...dzire,
-					expiryDate: dzire.expiryDate.toDate().toLocaleDateString(),
-				}))
-			)
-		);
+	dzires: DzireList[] = [];
+
+	constraints: QueryConstraint[] = [where("userId", "==", this.user.uid)];
+
+	dzires$ = this.firestore
+		.getSnapshotChanges<DzireList>("dzires", ...this.constraints)
+		.subscribe({
+			next: (dzires) => (this.dzires = dzires),
+			error: (err) =>
+				console.error("Error getting dzires snapshot:", err),
+		});
 
 	get displayName() {
 		return this.user.displayName || this.user.email?.split("@")[0];
 	}
 
 	navigateToCreate() {
-		this.router.navigate(["/create"]);
+		this.router.navigate(["/dashboard/create"]);
 	}
 
 	navigateToManage(id: string) {
-		this.router.navigate(["/manage", id]);
+		this.router.navigate(["/dashboard/manage", id]);
 	}
 }
